@@ -1,0 +1,14 @@
+# Local training / inference (Windows, NVIDIA GPU, CUDA 11.8). Not for Colab.
+# torch + torchvision must come from the CUDA index, and their versions must be a matching pair.
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.7.0+cu118
+torchvision==0.22.0+cu118
+
+ultralytics==8.4.183
+albumentations==2.0.8
+opencv-python>=4.10,<5
+numpy>=1.26,<2
+Pillow>=10.0
+matplotlib>=3.8
+seaborn>=0.13
+PyYAML>=6.0
