@@ -8,8 +8,9 @@ from fastapi.testclient import TestClient
 from app.server import config
 from app.server.main import create_app
 
+from .helpers import requires_real_frame, sample_jpeg
+
 CLASSES = ["distracted", "concentrating", "hand_raised", "phone", "sleeping"]
-SAMPLE_IMAGE = config.PROJECT_ROOT / "data" / "dataset" / "images" / "image147.jpg"  # frame from the test video
 
 
 def post_image(client, content=b"", name="x.jpg", content_type="image/jpeg"):
@@ -44,8 +45,9 @@ def test_model_info_matches_metrics_file(client):
     assert body["metrics"]["run"] == "full_run_v1"
 
 
+@requires_real_frame
 def test_detect_image_real_frame(client):
-    r = post_image(client, SAMPLE_IMAGE.read_bytes(), SAMPLE_IMAGE.name)
+    r = post_image(client, sample_jpeg(), "frame.jpg")
     assert r.status_code == 200
     body = r.json()
     assert (body["width"], body["height"]) == (832, 464)
@@ -76,12 +78,12 @@ def test_rejects_empty_file(client):
 
 def test_rejects_oversized_upload(client, monkeypatch):
     monkeypatch.setattr(config, "MAX_IMAGE_MB", 0)  # any non-empty upload is now over the limit
-    assert post_image(client, SAMPLE_IMAGE.read_bytes()).status_code == 413
+    assert post_image(client, sample_jpeg()).status_code == 413
 
 
 def test_rejects_too_many_pixels(client, monkeypatch):
     monkeypatch.setattr(config, "MAX_IMAGE_PIXELS", 1000)
-    assert post_image(client, SAMPLE_IMAGE.read_bytes()).status_code == 413
+    assert post_image(client, sample_jpeg()).status_code == 413
 
 
 def test_missing_model_reports_503(monkeypatch, tmp_path):
@@ -91,4 +93,4 @@ def test_missing_model_reports_503(monkeypatch, tmp_path):
         assert health.status_code == 503
         assert "missing.pt" in health.json()["detail"]
         assert c.get("/api/model").status_code == 503
-        assert post_image(c, SAMPLE_IMAGE.read_bytes()).status_code == 503
+        assert post_image(c, sample_jpeg()).status_code == 503

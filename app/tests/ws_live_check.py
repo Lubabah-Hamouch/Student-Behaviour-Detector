@@ -111,6 +111,9 @@ def main():
     parser.add_argument("--frames", type=int, default=40)
     parser.add_argument("--burst", type=int, default=0, help="send this many frames without waiting for replies")
     args = parser.parse_args()
+    if not args.camera and not args.video.exists():
+        parser.error(f"{args.video} not found. Pass --video <file> or --camera. "
+                     "The project's source videos show real students and are not included in the public repository.")
     asyncio.run(burst(args) if args.burst else one_in_flight(args))
 
 

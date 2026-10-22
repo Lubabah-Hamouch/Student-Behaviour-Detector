@@ -9,14 +9,15 @@ from starlette.websockets import WebSocketDisconnect
 from app.server import config
 from app.server.main import create_app
 
-SAMPLE_IMAGE = config.PROJECT_ROOT / "data" / "dataset" / "images" / "image147.jpg"
+from .helpers import requires_real_frame, sample_frame
+
 VIDEO_FPS, VIDEO_FRAMES = 10, 20  # a 2 s clip
 
 
 @pytest.fixture(scope="module")
 def video_bytes(tmp_path_factory):
-    """A tiny 2 s MP4 made from a real dataset frame."""
-    frame = cv2.imread(str(SAMPLE_IMAGE))
+    """A tiny 2 s MP4 made from a classroom frame (a synthetic one if the dataset is not present)."""
+    frame = sample_frame()
     path = tmp_path_factory.mktemp("video") / "clip.mp4"
     writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), VIDEO_FPS, (frame.shape[1], frame.shape[0]))
     for _ in range(VIDEO_FRAMES):
@@ -40,7 +41,7 @@ def wait_until_done(client, job_id, timeout=60):
 
 
 def jpeg_message(seq: int, image=None) -> bytes:
-    image = cv2.imread(str(SAMPLE_IMAGE)) if image is None else image
+    image = sample_frame() if image is None else image
     ok, buf = cv2.imencode(".jpg", image, [cv2.IMWRITE_JPEG_QUALITY, 80])
     assert ok
     return seq.to_bytes(4, "big") + buf.tobytes()
@@ -48,6 +49,7 @@ def jpeg_message(seq: int, image=None) -> bytes:
 
 # ---- video -------------------------------------------------------------------------------------------------
 
+@requires_real_frame
 def test_video_job_end_to_end(client, video_bytes):
     created = submit(client, video_bytes, sample_fps=5)
     assert created.status_code == 202
@@ -170,9 +172,10 @@ def test_cancelling_a_running_job_stops_it(client, video_bytes, monkeypatch):
 
 # ---- batch inference ---------------------------------------------------------------------------------------
 
+@requires_real_frame
 def test_batch_prediction_matches_single(client):
     detector = client.app.state.detector
-    image = cv2.imread(str(SAMPLE_IMAGE))
+    image = sample_frame()
     single = detector.predict(image)
     batch = detector.predict_batch([image, image])
     assert len(batch) == 2
@@ -186,6 +189,7 @@ def test_batch_prediction_matches_single(client):
 
 # ---- live --------------------------------------------------------------------------------------------------
 
+@requires_real_frame
 def test_live_frames_round_trip(client):
     with client.websocket_connect("/ws/live") as ws:
         for seq in (7, 8, 9):
