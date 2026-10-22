@@ -6,7 +6,7 @@ This document records the constraints of the dataset and the current model (`mod
 
 - The dataset is small: 5 source videos of one classroom, about 425 labelled frames. Metrics are measured on one held-out video per split, so they are noisy and should be read as indicative, not precise.
 - Three of the five classes (`concentrating`, `hand_raised`, `phone`) are detected reasonably well on the held-out test video. `distracted` is weak, and `sleeping` fails on the test video (test precision and recall are 0.000 at the default operating point, mAP50 0.216).
-- The `sleeping` failure is a data-coverage problem: the training footage contains almost no head-down-on-desk sleeping, which is the pose that makes up about 86% of the test video's `sleeping` labels. More varied sleeping footage is the fix. The label review did not find clear evidence that the labels are wrong.
+- The `sleeping` failure is a data-coverage problem: the training footage contains almost no head-down-on-desk sleeping, which is the pose that makes up about 86% of the test video's `sleeping` labels. More varied sleeping footage is the fix. The label review found no clear evidence of random labeling errors, but the observed labels use a broader definition of `sleeping` than the original annotation guide (see section 2).
 
 ## 1. Dataset and split
 
@@ -62,6 +62,7 @@ Per-crop reads: [`docs/eye_state_review.csv`](eye_state_review.csv) (one row per
 - The test video is **about 86% head-down-on-desk sleeping** (head on folded arms), with the face hidden. This is the pose that dominates the test set and is nearly absent from training.
 - The model therefore learned a narrow slice of the `sleeping` appearance (upright, lowered lids, a few individuals) and was tested on a different slice it rarely saw.
 - **The review did not find clear evidence of systematic mislabeling.** The test labels match the head-down definition of sleeping, and the training labels match the upright-dozing definition for the crops where eye state is readable. A minority of crops look awake (9 of 157 in train, 5 of 118 in test), and half the training crops cannot be judged at this resolution (heads are about 80 px wide in the front row and about 37 px in the telephone video, so eyes are 3 to 10 px). Isolated label errors, or frames adjacent to a doze, cannot be ruled out. A single still also cannot separate a blink from a doze.
+- **The written annotation guide and the observed labels use different definitions of `sleeping`.** The original annotation guide (`docs/archive/Instruction-annotation_OLD.docx`, in French) defines it strictly as "La tête est posée sur le bureau", "Les yeux semblent fermés" and "L'angle de la tête est supérieur à 45° vers le bas" (head resting on the desk, eyes appear closed, head angle more than 45° downward), whereas the observed training labels also cover upright dozing with eyes closed and the head up, which is a likely contributor to the difference between the training and test label patterns, alongside the video-content domain gap described above.
 
 **What would fix it.** More training footage covering head-down sleeping across multiple people and sessions, so that both appearances of the class (head-down and upright dozing) are represented in training and evaluated on held-out people or videos. Higher-resolution footage would also make eye state checkable.
 
