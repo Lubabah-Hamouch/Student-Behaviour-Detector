@@ -4,9 +4,27 @@ __pycache__/
 venv/
 .env
 *.zip
-data/raw_frames/*.jpg
-data/dataset_split/
 runs/
 models/pretrained/
 weights/
 .pytest_cache/
+
+# Derived data that can be regenerated
+data/dataset_split/
+
+# Privacy: the classroom footage and anything that shows identifiable people stays on the local disk only.
+# (The labels, classes.txt, data.yaml and frame_mapping.txt are small, contain no images, and stay tracked.)
+data/dataset/images/
+data/raw_frames/*.jpg
+data/raw_videos/
+data/_local_only/
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.mjpeg
+
+# Course reports: they name the group members and the supervisor and embed screenshots with student faces
+docs/archive/M2DS-YOLO_Controle_report(GRP2)_OLD.pdf
+docs/archive/Rapport_YOLO_OLD.pdf
