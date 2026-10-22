@@ -1,0 +1,276 @@
+crop_id,split,source_video,image,label_line,box_w_px,box_h_px,eye_state
+H001,train,handraising,image007.jpg,9,139,147,closed
+P002,train,telephone,image010.jpg,7,59,70,not visible
+P003,train,telephone,image010.jpg,8,51,75,unclear
+H004,train,handraising,image011.jpg,10,122,164,closed
+P005,train,telephone,image012.jpg,4,53,102,unclear
+P006,train,telephone,image012.jpg,9,118,212,unclear
+C007,train,concentrating,image014.jpg,0,90,118,not visible
+C008,train,concentrating,image014.jpg,7,124,185,unclear
+S009,test,sleeping+variety,image015.jpg,5,96,53,not visible
+S010,test,sleeping+variety,image015.jpg,6,202,118,not visible
+S011,test,sleeping+variety,image017.jpg,2,52,80,not visible
+S012,test,sleeping+variety,image017.jpg,8,60,116,unclear
+S013,test,sleeping+variety,image017.jpg,12,95,113,open
+H014,train,handraising,image020.jpg,6,123,153,closed
+S015,test,sleeping+variety,image026.jpg,6,74,71,not visible
+S016,test,sleeping+variety,image026.jpg,11,129,176,closed
+P017,train,telephone,image027.jpg,10,53,90,unclear
+H018,train,handraising,image029.jpg,5,154,174,closed
+H019,train,handraising,image029.jpg,6,112,144,closed
+H020,train,handraising,image030.jpg,1,131,161,not visible
+H021,train,handraising,image030.jpg,9,143,144,closed
+P022,train,telephone,image033.jpg,4,48,78,unclear
+P023,train,telephone,image033.jpg,10,71,96,not visible
+S024,test,sleeping+variety,image037.jpg,3,198,124,not visible
+S025,test,sleeping+variety,image037.jpg,4,104,51,not visible
+H026,train,handraising,image038.jpg,6,138,136,closed
+C027,train,concentrating,image039.jpg,5,78,104,not visible
+S028,test,sleeping+variety,image043.jpg,6,198,145,not visible
+H029,train,handraising,image044.jpg,9,125,149,closed
+H031,train,handraising,image048.jpg,3,135,141,closed
+S032,test,sleeping+variety,image049.jpg,10,70,99,unclear
+S033,test,sleeping+variety,image049.jpg,11,104,54,not visible
+S034,test,sleeping+variety,image049.jpg,12,133,78,not visible
+S035,test,sleeping+variety,image055.jpg,0,181,97,not visible
+S036,test,sleeping+variety,image055.jpg,5,76,42,not visible
+S037,test,sleeping+variety,image065.jpg,6,107,59,not visible
+S038,test,sleeping+variety,image065.jpg,7,111,58,not visible
+S039,test,sleeping+variety,image069.jpg,6,176,106,not visible
+S040,test,sleeping+variety,image069.jpg,7,53,38,not visible
+S041,test,sleeping+variety,image079.jpg,0,176,91,not visible
+S042,test,sleeping+variety,image085.jpg,7,96,58,not visible
+S043,test,sleeping+variety,image085.jpg,8,98,60,not visible
+H044,train,handraising,image101.jpg,11,130,144,closed
+S047,test,sleeping+variety,image105.jpg,2,113,73,not visible
+S048,test,sleeping+variety,image105.jpg,3,104,66,not visible
+C049,train,concentrating,image106.jpg,5,129,145,closed
+P050,train,telephone,image108.jpg,5,56,59,not visible
+P051,train,telephone,image108.jpg,10,53,69,unclear
+P052,train,telephone,image109.jpg,7,65,60,not visible
+S053,test,sleeping+variety,image110.jpg,3,152,143,not visible
+P054,train,telephone,image111.jpg,6,52,73,unclear
+P055,train,telephone,image111.jpg,7,51,58,not visible
+S056,test,sleeping+variety,image112.jpg,0,100,76,not visible
+S057,test,sleeping+variety,image112.jpg,1,93,54,not visible
+S058,test,sleeping+variety,image112.jpg,9,94,175,not visible
+S059,test,sleeping+variety,image113.jpg,1,70,46,not visible
+S060,test,sleeping+variety,image113.jpg,7,58,41,not visible
+P061,train,telephone,image116.jpg,6,52,54,not visible
+P062,train,telephone,image116.jpg,9,47,84,unclear
+P063,train,telephone,image118.jpg,6,44,77,unclear
+P064,train,telephone,image119.jpg,5,56,69,not visible
+P065,train,telephone,image119.jpg,9,48,92,unclear
+S066,test,sleeping+variety,image120.jpg,7,60,41,not visible
+H067,train,handraising,image122.jpg,10,105,140,closed
+S068,test,sleeping+variety,image123.jpg,8,80,46,not visible
+H069,train,handraising,image124.jpg,8,123,162,unclear
+P070,train,telephone,image125.jpg,5,46,78,unclear
+P071,train,telephone,image125.jpg,8,49,65,not visible
+S072,test,sleeping+variety,image126.jpg,7,178,92,not visible
+S073,test,sleeping+variety,image126.jpg,8,73,49,not visible
+C074,train,concentrating,image127.jpg,10,104,144,not visible
+S075,test,sleeping+variety,image129.jpg,6,178,89,not visible
+S076,test,sleeping+variety,image129.jpg,7,80,43,not visible
+P077,train,telephone,image131.jpg,7,51,77,unclear
+P078,train,telephone,image131.jpg,9,47,52,not visible
+P079,train,telephone,image132.jpg,7,45,54,not visible
+P080,train,telephone,image134.jpg,6,43,69,unclear
+H081,train,handraising,image138.jpg,1,120,140,unclear
+H082,train,handraising,image138.jpg,2,122,146,closed
+H083,train,handraising,image140.jpg,5,135,143,closed
+S084,test,sleeping+variety,image141.jpg,2,42,61,not visible
+S085,test,sleeping+variety,image141.jpg,5,98,74,unclear
+H086,train,handraising,image143.jpg,8,60,88,unclear
+S087,test,sleeping+variety,image144.jpg,2,60,48,not visible
+S088,test,sleeping+variety,image144.jpg,4,53,49,not visible
+S089,test,sleeping+variety,image144.jpg,8,102,51,not visible
+S091,test,sleeping+variety,image146.jpg,6,176,107,not visible
+S092,test,sleeping+variety,image147.jpg,4,57,43,not visible
+S093,test,sleeping+variety,image147.jpg,5,55,48,not visible
+S094,test,sleeping+variety,image147.jpg,7,76,55,not visible
+S095,test,sleeping+variety,image147.jpg,8,200,103,not visible
+H096,train,handraising,image148.jpg,9,139,160,closed
+H097,train,handraising,image153.jpg,8,103,135,not visible
+S098,test,sleeping+variety,image154.jpg,5,185,86,not visible
+S099,test,sleeping+variety,image154.jpg,6,77,64,not visible
+H100,train,handraising,image160.jpg,0,116,156,unclear
+H101,train,handraising,image160.jpg,3,115,107,closed
+P102,train,telephone,image165.jpg,3,110,115,unclear
+H103,train,handraising,image170.jpg,7,118,133,closed
+H104,train,handraising,image173.jpg,0,126,140,not visible
+H105,train,handraising,image173.jpg,1,79,95,not visible
+H106,train,handraising,image173.jpg,5,97,119,unclear
+H107,train,handraising,image174.jpg,8,119,102,closed
+H108,train,handraising,image181.jpg,8,132,144,closed
+H109,train,handraising,image187.jpg,3,116,145,unclear
+S110,test,sleeping+variety,image190.jpg,3,193,119,not visible
+S111,test,sleeping+variety,image190.jpg,4,95,56,not visible
+S112,test,sleeping+variety,image190.jpg,9,51,65,not visible
+H113,train,handraising,image192.jpg,4,122,141,unclear
+S114,test,sleeping+variety,image194.jpg,5,103,73,not visible
+S115,test,sleeping+variety,image194.jpg,6,98,67,not visible
+H116,train,handraising,image196.jpg,8,126,123,unclear
+H117,train,handraising,image198.jpg,3,123,134,unclear
+S118,test,sleeping+variety,image199.jpg,5,78,49,not visible
+H119,train,handraising,image201.jpg,7,135,136,closed
+H120,train,handraising,image201.jpg,8,43,83,unclear
+P121,train,telephone,image202.jpg,1,78,87,not visible
+P122,train,telephone,image202.jpg,7,73,78,unclear
+C123,train,concentrating,image203.jpg,6,75,46,not visible
+S124,test,sleeping+variety,image204.jpg,3,95,111,closed
+S125,test,sleeping+variety,image204.jpg,4,204,120,not visible
+S126,test,sleeping+variety,image204.jpg,8,94,64,not visible
+P127,train,telephone,image205.jpg,6,71,63,not visible
+S128,test,sleeping+variety,image206.jpg,5,79,62,not visible
+H129,train,handraising,image207.jpg,7,129,134,closed
+S130,test,sleeping+variety,image208.jpg,2,187,114,not visible
+S131,test,sleeping+variety,image208.jpg,3,77,50,not visible
+S132,test,sleeping+variety,image211.jpg,0,149,141,not visible
+S133,test,sleeping+variety,image211.jpg,1,58,43,not visible
+H134,train,handraising,image212.jpg,8,126,136,closed
+H135,train,handraising,image213.jpg,6,140,140,closed
+C136,train,concentrating,image215.jpg,8,144,158,unclear
+H137,train,handraising,image216.jpg,2,151,164,closed
+H138,train,handraising,image216.jpg,3,142,131,unclear
+H139,train,handraising,image217.jpg,8,130,138,closed
+S140,test,sleeping+variety,image219.jpg,6,143,164,closed
+S141,test,sleeping+variety,image219.jpg,7,82,48,not visible
+P142,train,telephone,image220.jpg,7,67,83,unclear
+S143,test,sleeping+variety,image221.jpg,0,189,107,not visible
+S144,test,sleeping+variety,image221.jpg,1,98,47,not visible
+S145,test,sleeping+variety,image222.jpg,0,161,174,closed
+S146,test,sleeping+variety,image222.jpg,1,109,61,not visible
+S147,test,sleeping+variety,image222.jpg,2,115,71,not visible
+H148,train,handraising,image223.jpg,2,129,136,closed
+P149,train,telephone,image224.jpg,7,74,87,unclear
+C150,train,concentrating,image226.jpg,8,144,146,unclear
+S151,test,sleeping+variety,image228.jpg,4,61,44,not visible
+S152,test,sleeping+variety,image228.jpg,5,93,62,not visible
+C153,train,concentrating,image229.jpg,8,141,154,unclear
+P154,train,telephone,image230.jpg,7,76,76,not visible
+C155,train,concentrating,image231.jpg,0,124,152,unclear
+C156,train,concentrating,image231.jpg,1,130,153,unclear
+C157,train,concentrating,image231.jpg,6,131,133,unclear
+H159,train,handraising,image233.jpg,6,130,137,closed
+H160,train,handraising,image233.jpg,7,139,160,unclear
+P161,train,telephone,image234.jpg,6,59,80,unclear
+P162,train,telephone,image234.jpg,7,66,73,not visible
+H163,train,handraising,image236.jpg,0,121,150,unclear
+H164,train,handraising,image236.jpg,2,146,164,closed
+H165,train,handraising,image236.jpg,3,144,136,closed
+P166,train,telephone,image237.jpg,7,66,71,unclear
+S167,test,sleeping+variety,image238.jpg,6,106,72,not visible
+H168,train,handraising,image242.jpg,7,132,135,closed
+S169,test,sleeping+variety,image243.jpg,1,178,135,not visible
+S170,test,sleeping+variety,image243.jpg,7,54,45,not visible
+C171,train,concentrating,image245.jpg,8,148,142,unclear
+C172,train,concentrating,image247.jpg,7,117,141,unclear
+C173,train,concentrating,image247.jpg,8,132,149,closed
+C174,train,concentrating,image249.jpg,7,121,154,unclear
+C175,train,concentrating,image249.jpg,8,141,136,unclear
+S177,test,sleeping+variety,image252.jpg,0,151,137,not visible
+C178,train,concentrating,image254.jpg,0,147,143,unclear
+H179,train,handraising,image255.jpg,1,145,138,unclear
+S180,test,sleeping+variety,image258.jpg,4,109,89,not visible
+C182,train,concentrating,image261.jpg,0,161,151,unclear
+S183,test,sleeping+variety,image263.jpg,2,108,89,not visible
+S184,test,sleeping+variety,image264.jpg,2,109,88,not visible
+C185,train,concentrating,image266.jpg,1,148,142,open
+H186,train,handraising,image268.jpg,1,144,139,open
+S187,test,sleeping+variety,image269.jpg,1,166,179,open
+C188,train,concentrating,image270.jpg,0,147,143,open
+S189,test,sleeping+variety,image278.jpg,3,109,89,not visible
+S190,test,sleeping+variety,image278.jpg,4,107,62,not visible
+S191,test,sleeping+variety,image279.jpg,2,99,104,open
+S192,test,sleeping+variety,image279.jpg,5,108,89,not visible
+S193,test,sleeping+variety,image282.jpg,2,107,63,not visible
+S194,test,sleeping+variety,image282.jpg,5,109,82,not visible
+C195,train,concentrating,image287.jpg,1,126,157,unclear
+H196,train,handraising,image288.jpg,1,146,139,unclear
+H197,train,handraising,image293.jpg,1,144,138,unclear
+C198,train,concentrating,image295.jpg,0,147,142,unclear
+C199,train,concentrating,image295.jpg,4,148,154,unclear
+C200,train,concentrating,image298.jpg,1,164,149,open
+C201,train,concentrating,image304.jpg,8,149,166,unclear
+P202,train,telephone,image307.jpg,6,74,74,not visible
+C203,train,concentrating,image312.jpg,9,143,135,unclear
+H204,train,handraising,image319.jpg,7,123,167,unclear
+H205,train,handraising,image320.jpg,2,92,192,not visible
+H206,train,handraising,image320.jpg,8,129,187,unclear
+S207,test,sleeping+variety,image329.jpg,5,192,145,not visible
+S208,test,sleeping+variety,image338.jpg,2,117,83,not visible
+S209,test,sleeping+variety,image338.jpg,3,63,44,not visible
+S210,test,sleeping+variety,image338.jpg,5,116,76,not visible
+C211,train,concentrating,image339.jpg,7,133,206,not visible
+H212,train,handraising,image340.jpg,6,123,189,unclear
+C213,train,concentrating,image341.jpg,10,139,194,unclear
+S214,test,sleeping+variety,image346.jpg,9,68,60,unclear
+S215,test,sleeping+variety,image346.jpg,10,80,56,not visible
+S216,test,sleeping+variety,image347.jpg,7,114,81,not visible
+S217,test,sleeping+variety,image347.jpg,8,124,73,not visible
+C218,train,concentrating,image348.jpg,7,119,196,not visible
+S219,test,sleeping+variety,image349.jpg,8,133,68,not visible
+S220,test,sleeping+variety,image349.jpg,9,136,59,not visible
+S221,test,sleeping+variety,image361.jpg,0,187,113,not visible
+S222,test,sleeping+variety,image361.jpg,2,88,43,not visible
+S223,test,sleeping+variety,image361.jpg,7,59,38,not visible
+S224,test,sleeping+variety,image362.jpg,5,59,41,not visible
+C225,train,concentrating,image368.jpg,5,143,145,open
+S226,test,sleeping+variety,image369.jpg,3,186,112,not visible
+C227,train,concentrating,image370.jpg,1,144,156,unclear
+S228,test,sleeping+variety,image373.jpg,0,184,111,not visible
+S229,test,sleeping+variety,image375.jpg,0,148,141,not visible
+S230,test,sleeping+variety,image375.jpg,2,54,40,not visible
+H231,train,handraising,image378.jpg,2,138,137,unclear
+H232,train,handraising,image380.jpg,8,138,137,unclear
+C233,train,concentrating,image381.jpg,1,127,139,unclear
+C234,train,concentrating,image382.jpg,1,141,143,unclear
+S235,test,sleeping+variety,image383.jpg,4,185,114,not visible
+S236,test,sleeping+variety,image383.jpg,8,64,37,not visible
+H237,train,handraising,image386.jpg,9,132,155,closed
+S238,test,sleeping+variety,image387.jpg,0,186,111,not visible
+S239,test,sleeping+variety,image387.jpg,1,85,42,not visible
+C241,train,concentrating,image389.jpg,2,123,143,unclear
+H242,train,handraising,image391.jpg,1,130,139,closed
+H243,train,handraising,image392.jpg,1,137,140,closed
+H244,train,handraising,image393.jpg,1,132,142,unclear
+H245,train,handraising,image393.jpg,6,115,156,open
+S246,test,sleeping+variety,image394.jpg,5,147,165,open
+S247,test,sleeping+variety,image394.jpg,10,58,35,not visible
+C248,train,concentrating,image395.jpg,1,142,151,open
+C249,train,concentrating,image396.jpg,3,115,154,unclear
+C250,train,concentrating,image396.jpg,4,134,153,closed
+H251,train,handraising,image398.jpg,1,142,142,unclear
+H252,train,handraising,image398.jpg,9,64,83,unclear
+P253,train,telephone,image402.jpg,3,45,86,unclear
+P254,train,telephone,image402.jpg,4,126,185,open
+P255,train,telephone,image403.jpg,0,104,148,unclear
+P256,train,telephone,image403.jpg,2,52,83,unclear
+C257,train,concentrating,image404.jpg,6,132,144,unclear
+P258,train,telephone,image407.jpg,4,101,182,open
+P259,train,telephone,image407.jpg,8,69,79,not visible
+P260,train,telephone,image409.jpg,0,108,144,unclear
+P261,train,telephone,image409.jpg,2,57,87,unclear
+S263,test,sleeping+variety,image411.jpg,4,98,106,unclear
+S264,test,sleeping+variety,image411.jpg,7,60,60,unclear
+P265,train,telephone,image412.jpg,2,62,88,unclear
+S266,test,sleeping+variety,image414.jpg,0,191,111,not visible
+S267,test,sleeping+variety,image414.jpg,2,86,45,not visible
+S268,test,sleeping+variety,image414.jpg,5,59,33,not visible
+S269,test,sleeping+variety,image414.jpg,6,65,64,unclear
+H270,train,handraising,image415.jpg,1,139,142,closed
+H271,train,handraising,image415.jpg,7,120,155,unclear
+P272,train,telephone,image416.jpg,7,70,69,not visible
+H273,train,handraising,image417.jpg,3,138,138,unclear
+H274,train,handraising,image418.jpg,2,84,152,unclear
+H275,train,handraising,image418.jpg,3,141,140,closed
+S276,test,sleeping+variety,image419.jpg,3,143,182,open
+P277,train,telephone,image421.jpg,9,63,69,not visible
+P278,train,telephone,image422.jpg,0,67,73,not visible
+P279,train,telephone,image422.jpg,3,137,153,closed
+S280,test,sleeping+variety,image423.jpg,0,55,65,unclear
+S281,test,sleeping+variety,image423.jpg,9,64,39,not visible
+C282,train,concentrating,image424.jpg,1,143,141,unclear
+C283,train,concentrating,image424.jpg,8,57,84,not visible
+C285,train,concentrating,image427.jpg,4,141,163,not visible
