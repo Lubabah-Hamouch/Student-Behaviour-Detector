@@ -1,0 +1,51 @@
+/* Design tokens: fonts, colour, spacing. Class colours are checked for contrast (chip text >= 4.5:1)
+   and colour-blind separation (min CIE76 dE 17 under protan/deutan/tritan simulation). */
+
+@font-face { font-family: "IBM Plex Sans"; font-weight: 400; font-style: normal; font-display: swap;
+  src: url("../fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 500; font-style: normal; font-display: swap;
+  src: url("../fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-style: normal; font-display: swap;
+  src: url("../fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-style: normal; font-display: swap;
+  src: url("../fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Newsreader"; font-weight: 400; font-style: normal; font-display: swap;
+  src: url("../fonts/newsreader-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Newsreader"; font-weight: 400; font-style: italic; font-display: swap;
+  src: url("../fonts/newsreader-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Newsreader"; font-weight: 500; font-style: normal; font-display: swap;
+  src: url("../fonts/newsreader-latin-500-normal.woff2") format("woff2"); }
+
+:root {
+  color-scheme: light;
+
+  --paper: #F5F3EE;
+  --surface: #FBFAF7;
+  --ink: #1A1C1E;
+  --ink-2: #55585B;     /* secondary text, 6.5:1 on paper */
+  --ink-3: #7E8184;     /* disabled and decorative only */
+  --line: #DAD6CC;
+  --line-strong: #BDB8AC;
+
+  --stage: #111315;
+  --stage-2: #1A1D20;
+  --stage-line: #32363A;
+  --on-stage: #ECE9E2;
+  --on-stage-2: #A3A6A8;
+
+  --c-concentrating: #2A8062;
+  --c-distracted: #B8872A;
+  --c-hand_raised: #4F9BDA;
+  --c-phone: #7058A6;
+  --c-sleeping: #A63E30;
+
+  --font-serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --max: 1180px;
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+}

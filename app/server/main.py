@@ -4,16 +4,19 @@ Run from the project root:
     uvicorn app.server.main:app --port 8000
 """
 import logging
+import mimetypes
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from . import config
 from .inference import Detector
-from .routes import image, live, meta, video
+from .routes import image, live, meta, pages, video
 from .video_jobs import JobManager
 
 log = logging.getLogger("focal")
+mimetypes.add_type("font/woff2", ".woff2")  # not in every platform's registry; static serving relies on it
 
 
 @asynccontextmanager
@@ -45,6 +48,8 @@ def create_app() -> FastAPI:
     application.include_router(image.router)
     application.include_router(video.router)
     application.include_router(live.router)
+    application.include_router(pages.router)
+    application.mount("/static", StaticFiles(directory=config.WEB_DIR), name="static")
     return application
 
 

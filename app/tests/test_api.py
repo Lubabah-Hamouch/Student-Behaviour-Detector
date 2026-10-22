@@ -34,6 +34,8 @@ def test_model_info_matches_metrics_file(client):
     assert [c["name"] for c in body["classes"]] == CLASSES
     assert all(c["definition"] for c in body["classes"])
     assert {c["name"] for c in body["classes"] if c["experimental"]} == {"sleeping"}
+    assert body["default_confidence"] == 0.5
+    assert config.CONF_MIN <= body["default_confidence"] <= 1
 
     on_disk = json.loads(config.METRICS_PATH.read_text(encoding="utf-8"))
     assert body["metrics"]["test"]["mAP50"] == pytest.approx(on_disk["test"]["mAP50"])

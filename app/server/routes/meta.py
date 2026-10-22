@@ -67,4 +67,5 @@ def model_info(detector: Detector = Depends(get_detector)):
         )
         for i in sorted(detector.names)
     ]
-    return ModelInfoResponse(model=_summary(detector, pretrained), classes=classes, metrics=metrics)
+    return ModelInfoResponse(model=_summary(detector, pretrained), default_confidence=config.DEFAULT_CONF,
+                             source_url=config.SOURCE_URL, classes=classes, metrics=metrics)

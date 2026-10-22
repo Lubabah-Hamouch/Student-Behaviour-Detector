@@ -1,0 +1,62 @@
+/* ---- header ---- */
+.site-header { border-bottom: 1px solid var(--line); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.wordmark { display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+            font-family: var(--font-serif); font-weight: 500; font-size: 1.4rem; letter-spacing: -0.01em; }
+.wordmark svg { width: 20px; height: 20px; }
+.site-nav { display: flex; gap: clamp(16px, 3vw, 32px); font-size: 0.9rem; }
+.site-nav a { color: var(--ink-2); text-decoration: none; padding: 6px 0; border-bottom: 1px solid transparent; }
+.site-nav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+.site-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+/* ---- hero ---- */
+.hero { padding-block: clamp(32px, 5vw, 56px) clamp(20px, 3vw, 28px); }
+.hero h1 { font-size: clamp(2rem, 1.2rem + 2.2vw, 3rem); max-width: 26ch; text-wrap: balance; }
+.hero .lede { margin-top: 14px; max-width: 56ch; color: var(--ink-2); font-size: 1.05rem; }
+
+/* ---- workspace ---- */
+.workspace { padding-bottom: clamp(48px, 8vw, 96px); }
+.workspace-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; margin-top: 20px; align-items: start; }
+
+.stage { position: relative; display: grid; place-items: center; min-height: 440px; overflow: hidden;
+         background: var(--stage); color: var(--on-stage); border-radius: var(--radius); }
+.stage[data-state="loading"], .stage[data-state="result"] { min-height: 0; } /* hug the image */
+.stage-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; margin-top: 12px;
+              min-height: 36px; font-size: 0.85rem; color: var(--ink-2); }
+.stage-note { max-width: 60ch; }
+.stage-actions { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+.file-info { max-width: 34ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.78rem; }
+
+/* media view: the canvas sits exactly over the image, so boxes line up at any display size */
+.media { position: relative; max-width: 100%; line-height: 0; transition: opacity 0.2s var(--ease); }
+.media img { max-width: 100%; max-height: min(72vh, 780px); width: auto; height: auto; }
+.media canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.stage[data-state="loading"] .media { opacity: 0.5; }
+
+.stage-progress { position: absolute; top: 0; left: 0; right: 0; height: 2px; overflow: hidden; }
+.stage-progress::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 30%; background: var(--on-stage);
+                         animation: stage-progress 1.1s var(--ease) infinite; }
+@keyframes stage-progress { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+
+.stage-error { display: flex; flex-direction: column; align-items: center; gap: 18px; max-width: 46ch; padding: 32px; text-align: center; }
+.stage-error p { font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.3; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+.panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.panel-head h2 { font-size: 1.25rem; }
+
+/* ---- model section ---- */
+.model { padding-block: clamp(48px, 8vw, 88px); border-top: 1px solid var(--line); }
+.model h2 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); }
+.model-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); margin-top: 28px; }
+
+/* ---- footer ---- */
+.site-footer { border-top: 1px solid var(--line); padding-block: 28px; font-size: 0.85rem; color: var(--ink-2); }
+.site-footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+/* ---- narrow screens ---- */
+@media (max-width: 900px) {
+  .workspace-grid { grid-template-columns: minmax(0, 1fr); }
+  .model-grid { grid-template-columns: minmax(0, 1fr); }
+  .stage { min-height: 320px; }
+}

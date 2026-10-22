@@ -124,5 +124,7 @@ class ModelMetrics(BaseModel):
 
 class ModelInfoResponse(BaseModel):
     model: ModelSummary
+    default_confidence: float  # initial value for the UI's confidence slider
+    source_url: str | None  # repository link, if configured
     classes: list[ClassInfo]
     metrics: ModelMetrics | None  # None if results/metrics_summary.json is missing or unreadable

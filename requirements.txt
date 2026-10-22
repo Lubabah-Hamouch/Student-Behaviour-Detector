@@ -17,3 +17,4 @@ PyYAML>=6.0
 fastapi==0.159.1
 uvicorn[standard]==0.54.0
 python-multipart==0.0.32
+markdown==3.11.2

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Limitations · Focal</title>
+  <meta name="description" content="Dataset, evaluation and known limitations of the Focal behavior-detection model.">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/static/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/tokens.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/layout.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+  <link rel="stylesheet" href="/static/css/prose.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="wordmark" href="/" aria-label="Focal, home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>
+        </svg>
+        <span>Focal</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/#model">Model</a>
+        <a href="/limitations" aria-current="page">Limitations</a>
+        {{source_link}}
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container prose-page">
+    <a class="back-link" href="/">Back to the detector</a>
+    <div class="prose-layout">
+      <nav class="toc" aria-label="On this page">
+        <p class="toc-title">On this page</p>
+        {{toc}}
+      </nav>
+      <article class="prose">
+        {{content}}
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Focal</span>
+      <span>Detections are model output and can be wrong.</span>
+    </div>
+  </footer>
+</body>
+</html>

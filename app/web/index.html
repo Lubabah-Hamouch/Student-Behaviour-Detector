@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Focal</title>
+  <meta name="description" content="Focal detects classroom behavior (concentrating, distracted, hand raised, phone, sleeping) in images, video and a live camera.">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/static/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/tokens.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/layout.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="wordmark" href="/" aria-label="Focal, home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>
+        </svg>
+        <span>Focal</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#model">Model</a>
+        <a href="/limitations">Limitations</a>
+        <a id="source-link" href="#" hidden>Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container">
+      <h1>Detect classroom behavior in images, video, or a live camera.</h1>
+      <p class="lede">Focal labels each student as concentrating, distracted, hand raised, on a phone, or sleeping.</p>
+    </section>
+
+    <section class="workspace container" aria-label="Detector">
+      <div class="segmented" role="tablist" aria-label="Input type">
+        <button type="button" role="tab" id="tab-image" data-mode="image" aria-selected="true">Image</button>
+        <button type="button" role="tab" id="tab-video" data-mode="video" aria-selected="false" disabled title="Not available yet">Video</button>
+        <button type="button" role="tab" id="tab-live" data-mode="live" aria-selected="false" disabled title="Not available yet">Live</button>
+      </div>
+
+      <div class="workspace-grid">
+        <div class="stage-col">
+          <div class="stage" id="stage" data-state="empty">
+            <div class="dropzone" id="dropzone">
+              <p class="dropzone-title">Drop an image or video here</p>
+              <p class="dropzone-sub">JPEG, PNG or WebP up to 25 MB. Video and live camera are coming next.</p>
+              <div class="dropzone-actions">
+                <button type="button" class="btn btn-light" id="choose-file">Choose file</button>
+                <button type="button" class="btn btn-outline-light" id="use-camera" disabled>Use camera</button>
+              </div>
+            </div>
+
+            <div class="media" id="media" hidden>
+              <img id="media-img" alt="">
+              <canvas id="overlay" aria-hidden="true"></canvas>
+            </div>
+            <div class="stage-progress" id="stage-progress" hidden aria-hidden="true"></div>
+            <div class="stage-error" id="stage-error" hidden role="alert">
+              <p id="stage-error-text"></p>
+              <button type="button" class="btn btn-light" id="error-choose">Choose another file</button>
+            </div>
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/bmp" hidden>
+          </div>
+          <div class="stage-meta">
+            <p class="stage-note">Trained on one classroom setup, so results on other scenes may differ.</p>
+            <div class="stage-actions" id="stage-actions" hidden>
+              <span class="file-info mono" id="file-info"></span>
+              <button type="button" class="btn-quiet" id="replace-btn">Choose another</button>
+              <button type="button" class="btn-quiet" id="clear-btn">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel" aria-labelledby="panel-title">
+          <div class="panel-head">
+            <h2 id="panel-title">Detections</h2>
+            <span class="panel-status mono" id="panel-status" role="status">No image yet</span>
+          </div>
+          <ul class="class-list" id="class-list"></ul>
+          <div class="threshold">
+            <div class="threshold-head">
+              <label for="conf-slider">Minimum confidence</label>
+              <span class="mono" id="conf-value">0.50</span>
+            </div>
+            <input type="range" id="conf-slider" min="0.10" max="0.95" step="0.01" value="0.50" disabled>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="model container" id="model" aria-labelledby="model-title">
+      <h2 id="model-title">About the model</h2>
+      <div class="model-grid">
+        <div class="model-main">
+          <p class="model-lede" id="model-lede">Loading model details&hellip;</p>
+          <ul class="legend" id="legend" aria-label="Classes"></ul>
+        </div>
+        <div class="model-side" id="model-side" hidden>
+          <p class="metric-value" id="metric-value"></p>
+          <p class="metric-label">Test mAP50</p>
+          <dl class="metric-facts" id="metric-facts"></dl>
+          <p class="metric-note" id="metric-note"></p>
+          <details class="per-class">
+            <summary>Per-class test results</summary>
+            <table class="mini-table">
+              <thead><tr><th scope="col">Class</th><th scope="col" class="num">Boxes</th><th scope="col" class="num">Precision</th><th scope="col" class="num">Recall</th><th scope="col" class="num">mAP50</th></tr></thead>
+              <tbody id="per-class-body"></tbody>
+            </table>
+          </details>
+          <p class="metric-link"><a href="/limitations">Read the limitations</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Focal</span>
+      <span>Detections are model output and can be wrong.</span>
+    </div>
+  </footer>
+
+  <script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

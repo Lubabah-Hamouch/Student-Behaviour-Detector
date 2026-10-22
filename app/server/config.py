@@ -11,10 +11,16 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 MODEL_PATH = Path(os.environ.get("FOCAL_MODEL", PROJECT_ROOT / "models" / "best.pt"))
 METRICS_PATH = Path(os.environ.get("FOCAL_METRICS", PROJECT_ROOT / "results" / "metrics_summary.json"))
 LIMITATIONS_PATH = PROJECT_ROOT / "docs" / "LIMITATIONS.md"
+DOCS_FILES = {"eye_state_review.csv": PROJECT_ROOT / "docs" / "eye_state_review.csv"}  # downloadable from /limitations
+WEB_DIR = PROJECT_ROOT / "app" / "web"
+SOURCE_URL = os.environ.get("FOCAL_SOURCE_URL") or None  # repository link shown in the header; hidden if unset
 
 # Inference. The IoU matches the value the reported metrics were computed with (Ultralytics' default of 0.7).
 IMGSZ = int(os.environ.get("FOCAL_IMGSZ", 640))
 CONF_MIN = float(os.environ.get("FOCAL_CONF_MIN", 0.10))  # lowest confidence returned; clients filter above it
+# Initial value of the UI's confidence slider. At 0.30 the test video shows hand_raised in 91% of frames against 34%
+# in the labels; 0.50 is a calmer starting point.
+DEFAULT_CONF = float(os.environ.get("FOCAL_DEFAULT_CONF", 0.50))
 IOU = float(os.environ.get("FOCAL_IOU", 0.7))
 DEVICE = os.environ.get("FOCAL_DEVICE") or None  # None = CUDA if available, else CPU
 
