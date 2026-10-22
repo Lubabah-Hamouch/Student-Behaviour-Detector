@@ -6,7 +6,7 @@ The project covers the whole pipeline: extracting and labelling frames, a split 
 
 ## Screenshots
 
-The picture area in each screenshot is blurred to protect the people in the footage. The detection boxes, labels and interface are real.
+Faces in each screenshot are blurred to protect the people in the footage. The detection boxes, labels and interface are real.
 
 ![Image mode: detections with confidence labels and a per-class summary](docs/screenshots/image-detection.png)
 
@@ -18,7 +18,7 @@ The picture area in each screenshot is blurred to protect the people in the foot
 
 ![Live mode: boxes drawn over a camera view with a latency and frame-rate chip](docs/screenshots/live-camera.png)
 
-**Live mode.** Frames from the camera stream to the server over a WebSocket, and the detections come back and are drawn over the picture. Here a recorded classroom clip stands in for the webcam. The chip shows the round-trip latency and frame rate, about 45 ms and 28 fps on the development laptop (RTX 4060).
+**Live mode.** Frames from the camera stream to the server over a WebSocket, and the detections come back and are drawn over the picture. Here a recorded classroom frame stands in for the webcam. The chip shows the round-trip latency and frame rate, about 47 ms and 29 fps on the development laptop (RTX 4060).
 
 ![Model section: class definitions, headline test score and a per-class table](docs/screenshots/model-info.png)
 
@@ -57,7 +57,7 @@ The model is trained on five videos of a single classroom, so the evaluation is 
 ```
 app/          web app: FastAPI server, static frontend, tests
 data/         dataset/ (labels, classes.txt, data.yaml; no images), raw_frames/ (frame-to-video mapping only)
-docs/         LIMITATIONS.md, screenshots/ (blurred), archive/ (the annotation guide)
+docs/         LIMITATIONS.md, screenshots/ (faces blurred), archive/ (the annotation guide)
 models/       best.pt (Git LFS)
 notebooks/    the original Colab notebook, superseded by scripts/
 results/      metrics_summary.json from the latest training run
