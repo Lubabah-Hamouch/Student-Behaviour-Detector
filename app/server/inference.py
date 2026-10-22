@@ -36,7 +36,7 @@ class Detector:
         self.weights = weights
         self.imgsz, self.conf, self.iou = imgsz, conf, iou
         self.device = device or ("cuda:0" if torch.cuda.is_available() else "cpu")
-        self.half = self.device.startswith("cuda")
+        self.fp16 = self.device.startswith("cuda")  # half precision on the GPU; FP32 on the CPU
         self.model = YOLO(str(weights))
         self.names: dict[int, str] = dict(self.model.names)
         # All inference runs on this one thread, warm-up included: CUDA/cuDNN keep per-thread state, so a request
@@ -75,8 +75,9 @@ class Detector:
 
     def _predict_batch(self, images: list[np.ndarray], conf: float | None) -> list[DetectionResult]:
         started = time.perf_counter()
+        precision = {"quantize": 16} if self.fp16 else {}  # `quantize` replaces the deprecated `half` argument
         results = self.model.predict(images, imgsz=self.imgsz, conf=self.conf if conf is None else conf,
-                                     iou=self.iou, device=self.device, half=self.half, verbose=False)
+                                     iou=self.iou, device=self.device, verbose=False, **precision)
         per_image_ms = round((time.perf_counter() - started) * 1000 / len(images), 1)
 
         out = []

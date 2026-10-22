@@ -80,6 +80,13 @@ def job_status(job_id: str, jobs: JobManager = Depends(get_jobs)):
                      frames_done=job.frames_done, frames_total=total, error=job.error)
 
 
+@router.delete("/jobs/{job_id}", status_code=204)
+def discard_job(job_id: str, jobs: JobManager = Depends(get_jobs)):
+    """Cancel a queued or running job, or release a finished job's result."""
+    if not jobs.discard(job_id):
+        raise HTTPException(status_code=404, detail="Unknown or expired job.")
+
+
 @router.get("/jobs/{job_id}/result", response_model=VideoResult)
 def job_result(job_id: str, jobs: JobManager = Depends(get_jobs)):
     job = _job_or_404(jobs, job_id)

@@ -25,6 +25,23 @@ def test_static_js_modules_import_only_files_that_exist(client):
             assert (module.parent / target).resolve().exists(), f"{module.name} imports missing {target}"
 
 
+def test_every_element_id_the_scripts_look_up_exists_in_the_page():
+    """A mistyped id only fails in the browser, so check them here: each $("#id") in main.js and modelinfo.js."""
+    page = (config.WEB_DIR / "index.html").read_text(encoding="utf-8")
+    page_ids = set(re.findall(r'\bid="([^"]+)"', page))
+    for script in ("main.js", "modelinfo.js", "panel.js"):
+        source = (config.WEB_DIR / "js" / script).read_text(encoding="utf-8")
+        wanted = set(re.findall(r'(?:\$|querySelector)\(["\']#([\w-]+)["\']\)', source))
+        assert wanted, f"no ids found in {script}"
+        assert wanted <= page_ids, f"{script} looks up ids missing from index.html: {sorted(wanted - page_ids)}"
+
+
+def test_video_player_markup_is_present():
+    page = (config.WEB_DIR / "index.html").read_text(encoding="utf-8")
+    for needle in ('<video id="video"', 'id="video-overlay"', 'id="timeline-track"', 'role="slider"', 'id="cancel-btn"'):
+        assert needle in page, needle
+
+
 def test_fonts_are_served_as_woff2(client):
     r = client.get("/static/fonts/ibm-plex-sans-latin-400-normal.woff2")
     assert r.status_code == 200 and r.headers["content-type"] == "font/woff2"

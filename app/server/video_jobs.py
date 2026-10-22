@@ -58,6 +58,11 @@ class Job:
     result: VideoResult | None = None
     created: float = 0.0
     finished: float | None = None
+    cancel_requested: bool = False
+
+
+class Cancelled(Exception):
+    """Raised inside the worker when a job was cancelled."""
 
 
 class JobManager:
@@ -95,6 +100,15 @@ class JobManager:
     def get(self, job_id: str) -> Job | None:
         return self._jobs.get(job_id)
 
+    def discard(self, job_id: str) -> bool:
+        """Forget a job. A queued or running job is cancelled (the worker stops at the next batch); a finished
+        job just has its result released. Returns False if the id is unknown."""
+        job = self._jobs.pop(job_id, None)
+        if job is None:
+            return False
+        job.cancel_requested = True
+        return True
+
     def pending_count(self) -> int:
         return sum(j.status in ("queued", "running") for j in list(self._jobs.values()))
 
@@ -115,6 +129,11 @@ class JobManager:
             self._process(job)
 
     def _process(self, job: Job) -> None:
+        if job.cancel_requested:  # cancelled while it was still queued
+            job.status = "cancelled"
+            job.path.unlink(missing_ok=True)
+            job.finished = time.time()
+            return
         job.status = "running"
         started = time.time()
         cap = cv2.VideoCapture(str(job.path))
@@ -130,6 +149,8 @@ class JobManager:
 
             def flush() -> None:
                 nonlocal detections_total
+                if job.cancel_requested:
+                    raise Cancelled
                 for t, result in zip(batch_t, self.detector.predict_batch(batch)):
                     frames.append(VideoFrame(t=round(t, 3), detections=[detection_out(d) for d in result.detections]))
                     inference_ms.append(result.inference_ms)
@@ -173,6 +194,8 @@ class JobManager:
             )
             job.frames_total = len(frames)
             job.status = "done"
+        except Cancelled:
+            job.status = "cancelled"
         except Exception as exc:  # report the failure through the job, never crash the worker
             job.status = "failed"
             job.error = str(exc)

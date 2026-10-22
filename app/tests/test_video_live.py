@@ -127,6 +127,47 @@ def test_result_before_done_is_409(client, video_bytes, monkeypatch):
     assert client.get(f"/api/jobs/{job_id}/result").status_code == 409
 
 
+def test_delete_releases_a_finished_job(client, video_bytes):
+    job_id = submit(client, video_bytes, sample_fps=2).json()["job_id"]
+    wait_until_done(client, job_id)
+    assert client.delete(f"/api/jobs/{job_id}").status_code == 204
+    assert client.get(f"/api/jobs/{job_id}").status_code == 404
+    assert client.delete(f"/api/jobs/{job_id}").status_code == 404
+
+
+def test_delete_cancels_a_queued_job(client, video_bytes, monkeypatch):
+    jobs = client.app.state.jobs
+    queued = []
+    monkeypatch.setattr(jobs, "_queue", type("Sink", (), {"put": lambda self, job: queued.append(job)})())
+    job_id = submit(client, video_bytes).json()["job_id"]
+    job = jobs.get(job_id)
+    assert client.delete(f"/api/jobs/{job_id}").status_code == 204
+    assert jobs.pending_count() == 0 or job.status == "queued"  # the cancelled job no longer blocks new ones
+    jobs._process(queued[0])  # what the worker would do with it
+    assert job.status == "cancelled" and job.result is None
+    assert not job.path.exists()
+
+
+def test_cancelling_a_running_job_stops_it(client, video_bytes, monkeypatch):
+    jobs = client.app.state.jobs
+    queued = []
+    monkeypatch.setattr(jobs, "_queue", type("Sink", (), {"put": lambda self, job: queued.append(job)})())
+    job = jobs.get(submit(client, video_bytes, sample_fps=10).json()["job_id"])
+    detector = client.app.state.detector
+    original = detector.predict_batch
+
+    def cancel_after_first_batch(images, conf=None):
+        job.cancel_requested = True  # the user cancels while the first batch is being analysed
+        return original(images, conf)
+
+    monkeypatch.setattr(detector, "predict_batch", cancel_after_first_batch)
+    jobs._process(job)
+    assert job.status == "cancelled"
+    assert job.frames_done <= config.VIDEO_BATCH  # at most the batch that was already running
+    assert job.result is None
+    assert not job.path.exists()
+
+
 # ---- batch inference ---------------------------------------------------------------------------------------
 
 def test_batch_prediction_matches_single(client):

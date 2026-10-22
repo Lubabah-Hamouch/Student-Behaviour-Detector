@@ -41,7 +41,7 @@
     <section class="workspace container" aria-label="Detector">
       <div class="segmented" role="tablist" aria-label="Input type">
         <button type="button" role="tab" id="tab-image" data-mode="image" aria-selected="true">Image</button>
-        <button type="button" role="tab" id="tab-video" data-mode="video" aria-selected="false" disabled title="Not available yet">Video</button>
+        <button type="button" role="tab" id="tab-video" data-mode="video" aria-selected="false">Video</button>
         <button type="button" role="tab" id="tab-live" data-mode="live" aria-selected="false" disabled title="Not available yet">Live</button>
       </div>
 
@@ -49,8 +49,8 @@
         <div class="stage-col">
           <div class="stage" id="stage" data-state="empty">
             <div class="dropzone" id="dropzone">
-              <p class="dropzone-title">Drop an image or video here</p>
-              <p class="dropzone-sub">JPEG, PNG or WebP up to 25 MB. Video and live camera are coming next.</p>
+              <p class="dropzone-title" id="dropzone-title">Drop an image here</p>
+              <p class="dropzone-sub" id="dropzone-sub">JPEG, PNG or WebP up to 25 MB.</p>
               <div class="dropzone-actions">
                 <button type="button" class="btn btn-light" id="choose-file">Choose file</button>
                 <button type="button" class="btn btn-outline-light" id="use-camera" disabled>Use camera</button>
@@ -61,13 +61,43 @@
               <img id="media-img" alt="">
               <canvas id="overlay" aria-hidden="true"></canvas>
             </div>
+            <div class="media" id="video-media" hidden>
+              <video id="video" playsinline preload="auto" aria-label="Uploaded video with detected behaviors"></video>
+              <canvas id="video-overlay" aria-hidden="true"></canvas>
+            </div>
+
             <div class="stage-progress" id="stage-progress" hidden aria-hidden="true"></div>
+            <div class="stage-status" id="stage-status" hidden role="status">
+              <p class="status-title" id="status-title"></p>
+              <div class="meter" id="status-meter" aria-hidden="true"><i id="status-bar"></i></div>
+              <p class="status-sub mono" id="status-sub"></p>
+              <button type="button" class="btn btn-outline-light" id="cancel-btn">Cancel</button>
+            </div>
             <div class="stage-error" id="stage-error" hidden role="alert">
               <p id="stage-error-text"></p>
               <button type="button" class="btn btn-light" id="error-choose">Choose another file</button>
             </div>
             <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/bmp" hidden>
           </div>
+
+          <div class="player" id="player" hidden>
+            <div class="player-bar">
+              <button type="button" class="btn btn-ink" id="play-btn" disabled>Play</button>
+              <span class="time mono" id="time-label">0:00.0 / 0:00.0</span>
+            </div>
+            <div class="timeline">
+              <ul class="timeline-labels" id="timeline-labels" aria-hidden="true"></ul>
+              <div class="timeline-track" id="timeline-track" role="slider" tabindex="0" aria-label="Video position"
+                   aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+                <canvas id="timeline-canvas"></canvas>
+                <div class="timeline-hover" id="timeline-hover"></div>
+                <div class="timeline-playhead" id="timeline-playhead"></div>
+                <span class="timeline-tip mono" id="timeline-tip"></span>
+              </div>
+            </div>
+            <p class="timeline-hint">Each row shows when a behavior appears. Click or drag to move through the video.</p>
+          </div>
+
           <div class="stage-meta">
             <p class="stage-note">Trained on one classroom setup, so results on other scenes may differ.</p>
             <div class="stage-actions" id="stage-actions" hidden>

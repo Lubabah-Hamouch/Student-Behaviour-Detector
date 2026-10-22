@@ -50,6 +50,8 @@ export class Overlay {
     this.threshold = 0.5;
     this.highlight = null; // class name emphasised from the side panel
     this.hovered = null; // detection under the pointer
+    this.pointer = null; // last pointer position over the canvas, in CSS pixels
+    this.onClick = null; // optional: called when the canvas is clicked (video mode toggles playback)
 
     const style = getComputedStyle(document.documentElement);
     this.colors = {};
@@ -62,13 +64,28 @@ export class Overlay {
 
     new ResizeObserver(() => this.resize()).observe(canvas);
     canvas.addEventListener("pointermove", (event) => this.pointerMove(event));
-    canvas.addEventListener("pointerleave", () => this.setHovered(null));
+    canvas.addEventListener("pointerleave", () => {
+      this.pointer = null;
+      this.setHovered(null);
+    });
+    canvas.addEventListener("click", (event) => this.onClick?.(event));
     document.fonts?.addEventListener?.("loadingdone", () => this.draw());
   }
 
   setDetections(detections) {
     this.detections = detections;
     this.setHovered(null);
+    this.draw();
+  }
+
+  /** Swap in the detections for a new video frame, keeping whatever is under the pointer highlighted. */
+  update(detections) {
+    this.detections = detections;
+    const hit = this.pointer ? this.hitTest(this.pointer.x, this.pointer.y) : null;
+    if (hit !== this.hovered) {
+      this.hovered = hit;
+      this.onHover(hit);
+    }
     this.draw();
   }
 
@@ -125,10 +142,8 @@ export class Overlay {
     this.draw();
   }
 
-  pointerMove(event) {
-    const bounds = this.canvas.getBoundingClientRect();
-    const x = event.clientX - bounds.left;
-    const y = event.clientY - bounds.top;
+  /** The smallest visible box containing the point, so a person in front of a group is still reachable. */
+  hitTest(x, y) {
     let best = null;
     let bestArea = Infinity;
     for (const d of this.visible()) {
@@ -138,7 +153,13 @@ export class Overlay {
         bestArea = r.w * r.h;
       }
     }
-    this.setHovered(best);
+    return best;
+  }
+
+  pointerMove(event) {
+    const bounds = this.canvas.getBoundingClientRect();
+    this.pointer = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+    this.setHovered(this.hitTest(this.pointer.x, this.pointer.y));
   }
 
   draw() {
