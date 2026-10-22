@@ -42,6 +42,27 @@ def test_video_player_markup_is_present():
         assert needle in page, needle
 
 
+def test_live_camera_markup_is_present():
+    page = (config.WEB_DIR / "index.html").read_text(encoding="utf-8")
+    for needle in ('id="live-video"', 'autoplay muted playsinline', 'id="live-overlay"', 'id="live-chip"', 'id="live-hint"',
+                   'id="stop-btn"', 'id="tab-live"', 'id="use-camera"'):
+        assert needle in page, needle
+    assert 'id="tab-live" data-mode="live" aria-selected="false" disabled' not in page  # the Live tab is enabled
+
+
+def test_live_limits_can_be_set_from_the_environment(monkeypatch):
+    import importlib
+
+    monkeypatch.setenv("FOCAL_MAX_LIVE_SESSIONS", "5")
+    monkeypatch.setenv("FOCAL_MAX_LIVE_FRAME_KB", "64")
+    try:
+        reloaded = importlib.reload(config)
+        assert (reloaded.MAX_LIVE_SESSIONS, reloaded.MAX_LIVE_FRAME_KB) == (5, 64)
+    finally:
+        monkeypatch.undo()
+        importlib.reload(config)
+
+
 def test_fonts_are_served_as_woff2(client):
     r = client.get("/static/fonts/ibm-plex-sans-latin-400-normal.woff2")
     assert r.status_code == 200 and r.headers["content-type"] == "font/woff2"

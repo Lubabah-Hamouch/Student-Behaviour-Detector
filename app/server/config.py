@@ -46,8 +46,8 @@ JOB_TTL_SECONDS = 3600  # finished jobs (and their results) are kept in memory t
 VIDEO_SUFFIXES = {".mp4", ".mov", ".m4v", ".webm", ".avi", ".mkv"}
 
 # Live camera over WebSocket.
-MAX_LIVE_SESSIONS = 2
-MAX_LIVE_FRAME_KB = 2048
+MAX_LIVE_SESSIONS = int(os.environ.get("FOCAL_MAX_LIVE_SESSIONS", 2))
+MAX_LIVE_FRAME_KB = int(os.environ.get("FOCAL_MAX_LIVE_FRAME_KB", 2048))
 
 # Shown in the model-info section. hand_raised and phone follow the original annotation guide.
 CLASS_DEFINITIONS = {

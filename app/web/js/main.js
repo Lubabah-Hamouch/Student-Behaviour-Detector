@@ -2,6 +2,7 @@ import { getModel } from "./api.js";
 import { kindOf, setupIntake } from "./intake.js";
 import { renderModelInfo } from "./modelinfo.js";
 import { ImageMode } from "./modes/image.js";
+import { LiveMode } from "./modes/live.js";
 import { VideoMode } from "./modes/video.js";
 import { Overlay } from "./overlay.js";
 import { Panel } from "./panel.js";
@@ -23,6 +24,12 @@ const MODES = {
     sub: "MP4, MOV or WebM, up to 3 minutes and 200 MB. It is analysed on the server and played here.",
     accept: "video/mp4,video/quicktime,video/webm,video/x-matroska,.mkv,.avi,.m4v",
   },
+  live: {
+    empty: "Camera off",
+    title: "Use your camera",
+    sub: "Point it at a group from a distance, the way a classroom camera would see them. Frames are analysed on the server and are not stored.",
+    accept: "",
+  },
 };
 
 async function init() {
@@ -33,6 +40,7 @@ async function init() {
     $("#panel-status").textContent = "Service unavailable";
     $("#dropzone-sub").textContent = error.message;
     $("#choose-file").disabled = true;
+    $("#use-camera").disabled = true;
     $("#model-lede").textContent = "Model details are unavailable while the service is down.";
     return;
   }
@@ -52,6 +60,7 @@ async function init() {
     dropzone: $("#dropzone"),
     imageMedia: $("#media"),
     videoMedia: $("#video-media"),
+    liveMedia: $("#live-media"),
     progressLine: $("#stage-progress"),
     statusBlock: $("#stage-status"),
     statusTitle: $("#status-title"),
@@ -61,14 +70,19 @@ async function init() {
     cancelButton: $("#cancel-btn"),
     errorBox: $("#stage-error"),
     errorText: $("#stage-error-text"),
+    errorButton: $("#error-choose"),
     actions: $("#stage-actions"),
     player: $("#player"),
+    liveBar: $("#live-bar"),
   });
 
   // Hovering a box highlights its class in the panel, and hovering a panel row emphasises that class's boxes.
   const onBoxHover = (det) => panel.setHighlight(det ? det.name : null);
-  const imageOverlay = new Overlay($("#overlay"), classNames, onBoxHover);
-  const videoOverlay = new Overlay($("#video-overlay"), classNames, onBoxHover);
+  const overlays = {
+    image: new Overlay($("#overlay"), classNames, onBoxHover),
+    video: new Overlay($("#video-overlay"), classNames, onBoxHover),
+    live: new Overlay($("#live-overlay"), classNames, onBoxHover),
+  };
 
   const timeline = new Timeline({
     track: $("#timeline-track"),
@@ -85,23 +99,23 @@ async function init() {
   const panel = new Panel($(".panel"), model.classes, {
     threshold,
     onThreshold: (t) => {
-      imageOverlay.setThreshold(t);
-      videoOverlay.setThreshold(t);
+      Object.values(overlays).forEach((overlay) => overlay.setThreshold(t));
       timeline.setThreshold(t);
     },
-    onHover: (name) => {
-      imageOverlay.setHighlight(name);
-      videoOverlay.setHighlight(name);
-    },
+    onHover: (name) => Object.values(overlays).forEach((overlay) => overlay.setHighlight(name)),
   });
-  for (const target of [imageOverlay, videoOverlay, timeline]) target.setThreshold(threshold);
+  [...Object.values(overlays), timeline].forEach((target) => target.setThreshold(threshold));
 
-  const image = new ImageMode({ img: $("#media-img"), fileInfo: $("#file-info") }, { stage, panel, overlay: imageOverlay });
+  const image = new ImageMode({ img: $("#media-img"), fileInfo: $("#file-info") }, { stage, panel, overlay: overlays.image });
   const video = new VideoMode(
     { video: $("#video"), playButton: $("#play-btn"), timeLabel: $("#time-label"), fileInfo: $("#file-info") },
-    { stage, panel, overlay: videoOverlay, timeline },
+    { stage, panel, overlay: overlays.video, timeline },
   );
-  const handlers = { image, video };
+  const live = new LiveMode(
+    { video: $("#live-video"), chip: $("#live-chip"), hint: $("#live-hint"), hintDismiss: $("#hint-dismiss") },
+    { stage, panel, overlay: overlays.live },
+  );
+  const handlers = { image, video, live };
 
   // ---- modes ------------------------------------------------------------------------------------------
   let current = "image";
@@ -113,15 +127,19 @@ async function init() {
   };
 
   function setMode(mode) {
-    handlers.image.reset();
-    handlers.video.reset();
+    Object.values(handlers).forEach((handler) => handler.reset());
     current = mode;
     for (const tab of document.querySelectorAll('[role="tab"]')) {
       tab.setAttribute("aria-selected", String(tab.dataset.mode === mode));
     }
+    const isLive = mode === "live";
     $("#dropzone-title").textContent = MODES[mode].title;
     $("#dropzone-sub").textContent = MODES[mode].sub;
-    fileInput.accept = MODES[mode].accept;
+    $("#choose-file").hidden = isLive;
+    const camera = $("#use-camera");
+    camera.textContent = isLive ? "Start camera" : "Use camera";
+    camera.className = isLive ? "btn btn-light" : "btn btn-outline-light";
+    if (!isLive) fileInput.accept = MODES[mode].accept;
     showEmpty();
   }
 
@@ -142,15 +160,21 @@ async function init() {
     await handlers[kind].open(file);
   }
 
-  for (const tab of document.querySelectorAll('[role="tab"]:not([disabled])')) {
+  for (const tab of document.querySelectorAll('[role="tab"]')) {
     tab.addEventListener("click", () => tab.dataset.mode !== current && setMode(tab.dataset.mode));
   }
   $("#clear-btn").addEventListener("click", startOver);
   $("#cancel-btn").addEventListener("click", startOver);
+  $("#stop-btn").addEventListener("click", startOver);
+  $("#use-camera").addEventListener("click", () => {
+    if (current !== "live") setMode("live");
+    live.start(); // starts inside the click, as camera permission prompts require
+  });
+  $("#error-choose").addEventListener("click", () => (current === "live" ? live.start() : fileInput.click()));
   setupIntake({
     stage: $("#stage"),
     fileInput,
-    chooseButtons: [$("#choose-file"), $("#error-choose"), $("#replace-btn")],
+    chooseButtons: [$("#choose-file"), $("#replace-btn")],
     onFile: handleFile,
   });
   setMode("image");

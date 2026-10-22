@@ -42,7 +42,7 @@
       <div class="segmented" role="tablist" aria-label="Input type">
         <button type="button" role="tab" id="tab-image" data-mode="image" aria-selected="true">Image</button>
         <button type="button" role="tab" id="tab-video" data-mode="video" aria-selected="false">Video</button>
-        <button type="button" role="tab" id="tab-live" data-mode="live" aria-selected="false" disabled title="Not available yet">Live</button>
+        <button type="button" role="tab" id="tab-live" data-mode="live" aria-selected="false">Live</button>
       </div>
 
       <div class="workspace-grid">
@@ -53,7 +53,7 @@
               <p class="dropzone-sub" id="dropzone-sub">JPEG, PNG or WebP up to 25 MB.</p>
               <div class="dropzone-actions">
                 <button type="button" class="btn btn-light" id="choose-file">Choose file</button>
-                <button type="button" class="btn btn-outline-light" id="use-camera" disabled>Use camera</button>
+                <button type="button" class="btn btn-outline-light" id="use-camera">Use camera</button>
               </div>
             </div>
 
@@ -64,6 +64,19 @@
             <div class="media" id="video-media" hidden>
               <video id="video" playsinline preload="auto" aria-label="Uploaded video with detected behaviors"></video>
               <canvas id="video-overlay" aria-hidden="true"></canvas>
+            </div>
+
+            <div class="media" id="live-media" hidden>
+              <video id="live-video" autoplay muted playsinline aria-label="Live camera view with detected behaviors"></video>
+              <canvas id="live-overlay" aria-hidden="true"></canvas>
+              <p class="live-chip mono" id="live-chip" aria-hidden="true"></p>
+              <div class="live-hint" id="live-hint" role="note" hidden>
+                <p>
+                  <span class="hint-full">Best results come from a wide view of people seated at a distance, like the classroom footage this model was trained on.</span>
+                  <span class="hint-short">Best from a distance, with a wide view of seated people.</span>
+                </p>
+                <button type="button" class="btn-quiet-light" id="hint-dismiss">Got it</button>
+              </div>
             </div>
 
             <div class="stage-progress" id="stage-progress" hidden aria-hidden="true"></div>
@@ -96,6 +109,11 @@
               </div>
             </div>
             <p class="timeline-hint">Each row shows when a behavior appears. Click or drag to move through the video.</p>
+          </div>
+
+          <div class="live-bar" id="live-bar" hidden>
+            <button type="button" class="btn btn-ink" id="stop-btn">Stop</button>
+            <span class="time">Camera on. Frames are analysed on the server and are not stored.</span>
           </div>
 
           <div class="stage-meta">
