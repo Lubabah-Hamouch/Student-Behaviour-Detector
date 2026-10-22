@@ -11,7 +11,7 @@ from starlette.concurrency import run_in_threadpool
 from .. import config
 from ..deps import get_detector
 from ..inference import Detector
-from ..schemas import Box, DetectionOut, ImageDetectionResponse
+from ..schemas import ImageDetectionResponse, detection_out
 
 router = APIRouter(prefix="/api/detect")
 
@@ -47,15 +47,10 @@ async def detect_image(file: UploadFile = File(...), detector: Detector = Depend
     image = await run_in_threadpool(_decode, data)
     result = await run_in_threadpool(detector.predict, image)
 
-    detections = [
-        DetectionOut(class_id=d.class_id, name=d.name, confidence=d.confidence,
-                     box=Box(x1=d.x1, y1=d.y1, x2=d.x2, y2=d.y2))
-        for d in result.detections
-    ]
     return ImageDetectionResponse(
         width=result.width,
         height=result.height,
         inference_ms=result.inference_ms,
-        detections=detections,
+        detections=[detection_out(d) for d in result.detections],
         counts=dict(Counter(d.name for d in result.detections)),
     )

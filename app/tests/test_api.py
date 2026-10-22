@@ -6,16 +6,10 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.server import config
-from app.server.main import app
+from app.server.main import create_app
 
 CLASSES = ["distracted", "concentrating", "hand_raised", "phone", "sleeping"]
 SAMPLE_IMAGE = config.PROJECT_ROOT / "data" / "dataset" / "images" / "image147.jpg"  # frame from the test video
-
-
-@pytest.fixture(scope="module")
-def client():
-    with TestClient(app) as c:  # runs the lifespan: loads the model once for the module
-        yield c
 
 
 def post_image(client, content=b"", name="x.jpg", content_type="image/jpeg"):
@@ -90,7 +84,7 @@ def test_rejects_too_many_pixels(client, monkeypatch):
 
 def test_missing_model_reports_503(monkeypatch, tmp_path):
     monkeypatch.setattr(config, "MODEL_PATH", tmp_path / "missing.pt")
-    with TestClient(app) as c:
+    with TestClient(create_app()) as c:
         health = c.get("/api/health")
         assert health.status_code == 503
         assert "missing.pt" in health.json()["detail"]
