@@ -36,9 +36,15 @@ uvicorn app.server.main:app --port 8000
 
 Then open <http://127.0.0.1:8000>. [`app/README.md`](app/README.md) has the details: requirements, configuration, the API and browser support.
 
+To run the tests, install the dev requirements and run pytest: `pip install -r requirements-dev.txt` then `python -m pytest app/tests`.
+
 ## Data
 
 The training frames (about 430) and the five source videos show real students, so they are **not included** in this repository. What is included: the YOLO label files in `data/dataset/labels/`, `classes.txt`, `data.yaml`, the frame-to-video mapping `data/raw_frames/frame_mapping.txt`, and the trained weights. The earlier project reports are not included either. To retrain, supply your own labelled frames in YOLO format under `data/dataset/`, plus a `frame_mapping.txt` that maps each frame to its source video (the split is made by video); see [`scripts/prepare_dataset.py`](scripts/prepare_dataset.py). The app itself needs only `models/best.pt`.
+
+## License
+
+The code is released under the [MIT License](LICENSE). `models/best.pt` was trained on private classroom footage, so don't assume it can be redistributed on the same terms; see [Data and model usage](docs/LIMITATIONS.md#7-data-and-model-usage).
 
 ## How it was built
 

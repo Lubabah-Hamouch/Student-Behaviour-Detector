@@ -113,3 +113,10 @@ These numbers are not comparable to the figures reported in the original noteboo
 - `scripts/prepare_dataset.py` rebuilds the split (`--dry-run` shows the plan without writing).
 - `scripts/train.py` trains and evaluates, and writes `results/metrics_summary.json`.
 - With more footage, the most informative next step is leave-one-video-out evaluation, which gives one score per held-out video instead of a single noisy test number.
+
+## 7. Data and model usage
+
+- The code in this repository is released under the MIT License (see `LICENSE`).
+- The training frames and source videos show real students and are not included. The label files, class list and frame-to-video mapping are included.
+- `models/best.pt` was trained on that private footage. The MIT license covers the code, not the weights or the underlying data, and the weights should not be assumed freely redistributable. Check with the author before redistributing them or using them outside this project.
+- The model was fitted to one classroom, so it should not be used to make decisions about individual students (see sections 1 to 3).
