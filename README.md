@@ -6,6 +6,8 @@ The project covers the whole pipeline: extracting and labelling frames, a split 
 
 ## Screenshots
 
+The picture area in each screenshot is blurred to protect the people in the footage. The detection boxes, labels and interface are real.
+
 ![Image mode: detections with confidence labels and a per-class summary](docs/screenshots/image-detection.png)
 
 **Image mode.** Each detection gets a class-colored box and a confidence label. The side panel summarizes counts and mean confidence per class, and the confidence slider filters in the browser without re-running the model.
@@ -28,15 +30,19 @@ The project covers the whole pipeline: extracting and labelling frames, a split 
 python -m venv venv
 venv\Scripts\Activate.ps1          # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
-git lfs pull                       # fetches models/best.pt and the source videos
+git lfs pull                       # fetches models/best.pt
 uvicorn app.server.main:app --port 8000
 ```
 
 Then open <http://127.0.0.1:8000>. [`app/README.md`](app/README.md) has the details: requirements, configuration, the API and browser support.
 
+## Data
+
+The training frames (about 430) and the five source videos show real students, so they are **not included** in this repository. What is included: the YOLO label files in `data/dataset/labels/`, `classes.txt`, `data.yaml`, the frame-to-video mapping `data/raw_frames/frame_mapping.txt`, and the trained weights. The earlier project reports are not included either. To retrain, supply your own labelled frames in YOLO format under `data/dataset/`, plus a `frame_mapping.txt` that maps each frame to its source video (the split is made by video); see [`scripts/prepare_dataset.py`](scripts/prepare_dataset.py). The app itself needs only `models/best.pt`.
+
 ## How it was built
 
-1. [`extract-images.py`](extract-images.py) samples one frame per second from each source video.
+1. [`extract-images.py`](extract-images.py) samples one frame per second from each source video (the videos are not part of this repository).
 2. The frames were labelled by hand in YOLO format, following the guide archived in [`docs/archive/`](docs/archive/).
 3. [`scripts/prepare_dataset.py`](scripts/prepare_dataset.py) splits whole videos into train, validation and test, so near-identical frames from one video never land in different splits. It balances classes by augmenting the training split only.
 4. [`scripts/train.py`](scripts/train.py) trains YOLOv8m, evaluates on the validation and test videos, and writes `models/best.pt` and `results/metrics_summary.json`.
@@ -50,8 +56,8 @@ The model is trained on five videos of a single classroom, so the evaluation is 
 
 ```
 app/          web app: FastAPI server, static frontend, tests
-data/         dataset/ (frames, labels, classes.txt, data.yaml), raw_videos/ (Git LFS), raw_frames/ (frame-to-video mapping)
-docs/         LIMITATIONS.md, screenshots/, archive/ (annotation guide and earlier reports)
+data/         dataset/ (labels, classes.txt, data.yaml; no images), raw_frames/ (frame-to-video mapping only)
+docs/         LIMITATIONS.md, screenshots/ (blurred), archive/ (the annotation guide)
 models/       best.pt (Git LFS)
 notebooks/    the original Colab notebook, superseded by scripts/
 results/      metrics_summary.json from the latest training run

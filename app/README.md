@@ -19,14 +19,15 @@ Then open <http://127.0.0.1:8000>. Starting takes about 15 to 20 seconds, becaus
 
 `requirements.txt` installs the CUDA 11.8 build of PyTorch. On a machine without a compatible NVIDIA GPU, install a CPU build of `torch` and `torchvision` first. The app falls back to the CPU on its own, but this path is untested and will be much slower (live mode in particular).
 
-Run the tests with `pip install -r requirements-dev.txt` and then `python -m pytest app/tests`.
+Run the tests with `pip install -r requirements-dev.txt` and then `python -m pytest app/tests`. A few tests need a real classroom frame, which is not included (it would show real students), so they are skipped automatically.
 
 ## The model file
 
 The server loads `models/best.pt` at startup. If it is missing, the server still starts, and `/api/health` reports why.
 
 - The weights are tracked with Git LFS. After cloning, run `git lfs pull`. A file of a few hundred bytes is an LFS pointer and not the model.
-- To train your own, build the split with `python scripts/prepare_dataset.py` and then run `python scripts/train.py`. The best checkpoint is copied to `models/best.pt`, and the metrics shown in the app come from `results/metrics_summary.json`, which the same script writes. See [`scripts/train.py`](../scripts/train.py) for its options.
+- The training data (frames and source videos) shows real students and is not part of this repository. To train your own model, supply your own labelled frames in YOLO format under `data/dataset/`, together with a `data/raw_frames/frame_mapping.txt` that maps each frame to its source video (the split is made by video).
+- Then build the split with `python scripts/prepare_dataset.py` and run `python scripts/train.py`. The best checkpoint is copied to `models/best.pt`, and the metrics shown in the app come from `results/metrics_summary.json`, which the same script writes. See [`scripts/train.py`](../scripts/train.py) for its options.
 
 ## Configuration
 

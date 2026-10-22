@@ -10,7 +10,7 @@ This document records the constraints of the dataset and the current model (`mod
 
 ## 1. Dataset and split
 
-**Source data.** Five videos (68 to 95 s each) recorded in the same classroom with the same camera position, sampled at 1 frame per second (`extract-images.py`). After dropping 5 frames that have no valid boxes, 425 labelled frames remain. Frames are 832 x 464 pixels.
+**Source data.** Five videos (68 to 95 s each) recorded in the same classroom with the same camera position, sampled at 1 frame per second (`extract-images.py`). After dropping 5 frames that have no valid boxes, 425 labelled frames remain. Frames are 832 x 464 pixels. The frames and videos show real students, so they are not included in the public repository; the label files, `classes.txt` and the frame-to-video mapping are.
 
 **Split by whole video.** `scripts/prepare_dataset.py` assigns entire videos to a split:
 
@@ -53,7 +53,7 @@ Class balancing augmentation is applied to the train split only.
 | **train total** | **157** | **38 (24%)** | **9 (6%)** | **78 (50%)** | **32 (20%)** |
 | **test: sleeping+variety** | **118** | **4 (3%)** | **5 (4%)** | **8 (7%)** | **101 (86%)** |
 
-Per-crop reads: [`docs/eye_state_review.csv`](eye_state_review.csv) (one row per reviewed box; `image` is in `data/dataset/images/`, `label_line` is the 0-based line of the box in the matching `data/dataset/labels/` file; the validation video was not reviewed).
+Per-crop reads: [`docs/eye_state_review.csv`](eye_state_review.csv) (one row per reviewed box; `image` is a frame name in `data/dataset/images/`, which is not included in the public repository for privacy, and `label_line` is the 0-based line of the box in the matching `data/dataset/labels/` file; the validation video was not reviewed).
 
 **Findings.**
 
