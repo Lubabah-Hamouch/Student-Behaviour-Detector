@@ -1,0 +1,104 @@
+{
+  "run": "full_run_v1",
+  "run_dir": "runs/full_run_v1",
+  "finished": "2026-10-22T01:30:30",
+  "model": "yolov8m.pt",
+  "epochs_requested": 100,
+  "epochs_completed": 72,
+  "training_time": "35m19s",
+  "batch": 8,
+  "imgsz": 640,
+  "optimizer": "AdamW",
+  "lr0": 0.001,
+  "patience": 20,
+  "seed": 42,
+  "best_weights": "models/best.pt",
+  "val": {
+    "mAP50": 0.6199387558979602,
+    "mAP50-95": 0.32622374600982007,
+    "precision": 0.5413442844245059,
+    "recall": 0.6549127876024965,
+    "per_class": {
+      "distracted": {
+        "precision": 0.3568290459570558,
+        "recall": 0.5838150289017341,
+        "mAP50": 0.5745325278906369,
+        "mAP50-95": 0.28731242283217606,
+        "instances": 173
+      },
+      "concentrating": {
+        "precision": 0.6799290549588155,
+        "recall": 0.7325842696629213,
+        "mAP50": 0.7608113232781636,
+        "mAP50-95": 0.4177099198219776,
+        "instances": 445
+      },
+      "hand_raised": {
+        "precision": 0.6940445995645332,
+        "recall": 0.8389830508474576,
+        "mAP50": 0.8203097019469145,
+        "mAP50-95": 0.41216644454288626,
+        "instances": 118
+      },
+      "phone": {
+        "precision": 0.7414803085316837,
+        "recall": 0.811489280908062,
+        "mAP50": 0.7675565141743047,
+        "mAP50-95": 0.43103043676389224,
+        "instances": 205
+      },
+      "sleeping": {
+        "precision": 0.23443841311044133,
+        "recall": 0.3076923076923077,
+        "mAP50": 0.17648371219978132,
+        "mAP50-95": 0.08289950608816808,
+        "instances": 13
+      }
+    },
+    "classes_without_instances": []
+  },
+  "test": {
+    "mAP50": 0.502412884770915,
+    "mAP50-95": 0.2779913236161135,
+    "precision": 0.4821286980014038,
+    "recall": 0.43674627153869705,
+    "per_class": {
+      "distracted": {
+        "precision": 0.2900524457745282,
+        "recall": 0.3093758661326806,
+        "mAP50": 0.26732063558962943,
+        "mAP50-95": 0.12186761337438035,
+        "instances": 173
+      },
+      "concentrating": {
+        "precision": 0.6954315993219673,
+        "recall": 0.6342622514675645,
+        "mAP50": 0.7276881233211523,
+        "mAP50-95": 0.3679848234683537,
+        "instances": 324
+      },
+      "hand_raised": {
+        "precision": 0.6924916789023495,
+        "recall": 0.8461538461538461,
+        "mAP50": 0.845422826193567,
+        "mAP50-95": 0.5541084462607541,
+        "instances": 39
+      },
+      "phone": {
+        "precision": 0.7326677660081741,
+        "recall": 0.3939393939393939,
+        "mAP50": 0.4553822808056881,
+        "mAP50-95": 0.2717822600232275,
+        "instances": 33
+      },
+      "sleeping": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "mAP50": 0.21625055794453754,
+        "mAP50-95": 0.07421347495385223,
+        "instances": 118
+      }
+    },
+    "classes_without_instances": []
+  }
+}
