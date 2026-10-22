@@ -1,0 +1,5 @@
+distracted
+concentrating
+hand_raised
+phone
+sleeping

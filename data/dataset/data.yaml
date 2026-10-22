@@ -1,0 +1,14 @@
+# Dataset root, relative to this file
+path: .
+# Placeholder split paths: images/ is still a flat folder; train/val/test dirs are created when the dataset is re-split
+train: images/train
+val: images/val
+test: images/test
+
+nc: 5
+names:
+  0: distracted
+  1: concentrating
+  2: hand_raised
+  3: phone
+  4: sleeping
