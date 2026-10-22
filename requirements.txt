@@ -12,3 +12,8 @@ Pillow>=10.0
 matplotlib>=3.8
 seaborn>=0.13
 PyYAML>=6.0
+
+# Web app (app/server)
+fastapi==0.159.1
+uvicorn[standard]==0.54.0
+python-multipart==0.0.32

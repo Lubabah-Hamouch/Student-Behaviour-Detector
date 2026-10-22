@@ -9,3 +9,4 @@ data/dataset_split/
 runs/
 models/pretrained/
 weights/
+.pytest_cache/
