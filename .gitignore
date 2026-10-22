@@ -6,3 +6,6 @@ venv/
 *.zip
 data/raw_frames/*.jpg
 data/dataset_split/
+runs/
+models/pretrained/
+weights/
