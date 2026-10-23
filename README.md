@@ -49,7 +49,7 @@ The code is released under the [MIT License](LICENSE). `models/best.pt` was trai
 ## How it was built
 
 1. [`extract-images.py`](extract-images.py) samples one frame per second from each source video (the videos are not part of this repository).
-2. The frames were labelled by hand in YOLO format, following the guide archived in [`docs/archive/`](docs/archive/).
+2. The frames were labelled by hand in YOLO format, following a written annotation guide (in French; not included in this repository).
 3. [`scripts/prepare_dataset.py`](scripts/prepare_dataset.py) splits whole videos into train, validation and test, so near-identical frames from one video never land in different splits. It balances classes by augmenting the training split only.
 4. [`scripts/train.py`](scripts/train.py) trains YOLOv8m, evaluates on the validation and test videos, and writes `models/best.pt` and `results/metrics_summary.json`.
 5. [`app/`](app/) serves the model.
@@ -63,7 +63,7 @@ The model is trained on five videos of a single classroom, so the evaluation is 
 ```
 app/          web app: FastAPI server, static frontend, tests
 data/         dataset/ (labels, classes.txt, data.yaml; no images), raw_frames/ (frame-to-video mapping only)
-docs/         LIMITATIONS.md, screenshots/ (faces blurred), archive/ (the annotation guide)
+docs/         LIMITATIONS.md, screenshots/ (faces blurred)
 models/       best.pt (Git LFS)
 notebooks/    the original Colab notebook, superseded by scripts/
 results/      metrics_summary.json from the latest training run
