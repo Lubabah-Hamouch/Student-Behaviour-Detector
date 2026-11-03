@@ -43,8 +43,9 @@ DEFAULT_OUTPUT = DATA_DIR / "dataset_split"
 DEFAULT_YAML = DATA_DIR / "dataset" / "data.yaml"
 
 # Which source videos (the `source_video` column of frame_mapping.txt) go to which split.
-# Every video must appear exactly once. Chosen so that val and test each contain all 5
-# classes; see the discussion in the PR/chat for the trade-offs of this 3/1/1 split.
+# Every video must appear exactly once. Only Handraise+tel and sleeping+variety contain all 5
+# classes in meaningful numbers, so they are val and test; the cost is that train loses its two
+# most varied videos. See "Dataset and split" in docs/LIMITATIONS.md.
 VIDEO_SPLIT = {
     "train": ["handraising", "concentrating", "telephone"],
     "val": ["Handraise+tel"],
