@@ -4,6 +4,18 @@ Focal detects five classroom behaviors (concentrating, distracted, hand raised, 
 
 The project covers the whole pipeline: extracting and labelling frames, a split that keeps each source video in one split only, training and evaluation, and the web app. It also documents where the model falls short. The `sleeping` class in particular does not hold up on a held-out video, and [`docs/LIMITATIONS.md`](docs/LIMITATIONS.md) explains why.
 
+## Results
+
+Measured on a held-out test video that was never used for training or model selection. Each split is a single video, so the scores are noisy.
+
+| Test video | mAP50 |
+|---|---|
+| All five classes | **0.502** |
+| Best class (`hand_raised`) | 0.845 |
+| Weakest class (`sleeping`) | 0.216 |
+
+Validation scores, precision, recall and the full per-class tables are in [`docs/LIMITATIONS.md`](docs/LIMITATIONS.md#4-results).
+
 ## Screenshots
 
 Faces in each screenshot are blurred to protect the people in the footage. The detection boxes, labels and interface are real.
